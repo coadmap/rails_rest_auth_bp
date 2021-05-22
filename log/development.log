@@ -2663,3 +2663,63 @@ Migrating to CreateEmploymentStatuses (20201109102553)
   [1m[36mPrefecture Load (0.4ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "宮崎県"], ["LIMIT", 1]]
   [1m[36mPrefecture Load (0.5ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "鹿児島県"], ["LIMIT", 1]]
   [1m[36mPrefecture Load (0.4ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "沖縄県"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "rails_rest_bp_development"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "rails_rest_bp_test"[0m
+  [1m[35m (1806.6ms)[0m  [1m[35mCREATE DATABASE "rails_rest_bp_development" ENCODING = 'unicode'[0m
+  [1m[35m (1424.5ms)[0m  [1m[35mCREATE DATABASE "rails_rest_bp_test" ENCODING = 'unicode'[0m
+  [1m[35m (56.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (15.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3649240473925792830)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20201105094739)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (30.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "pgcrypto"[0m
+  [1m[35m (20.7ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "email" character varying NOT NULL, "password_digest" character varying NOT NULL, "email_verification_status" integer DEFAULT 0 NOT NULL, "email_verification_token" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCOMMENT ON TABLE "accounts" IS 'アカウント'[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email" IS 'メールアドレス'[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."password_digest" IS 'パスワードのハッシュ値'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email_verification_status" IS 'メールアドレスの確認状態'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email_verification_token" IS 'メール確認用のトークン'[0m
+  [1m[36mprimary::SchemaMigration Create (2.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201105094739"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJtis (20201105103105)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.7ms)[0m  [1m[35mCREATE TABLE "jtis" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "jtis" IS 'JWTのホワイトリスト'[0m
+  [1m[36mprimary::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201105103105"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCompanies (20201108043701)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.2ms)[0m  [1m[35mCREATE TABLE "companies" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "name_kana" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "companies" IS '企業'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."name" IS '法人名'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."name_kana" IS '法人名(ふりがな)'[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108043701"]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEmployees (20201108044639)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (32.0ms)[0m  [1m[35mCREATE TABLE "employees" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "email" character varying NOT NULL, "password_digest" character varying NOT NULL, "email_verification_status" integer DEFAULT 0 NOT NULL, "email_verification_token" uuid, "company_id" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_15ca1438d5"
+FOREIGN KEY ("company_id")
+  REFERENCES "companies" ("id")
+)[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE  INDEX  "index_employees_on_company_id" ON "employees"  ("company_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "employees" IS '従業員'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email" IS 'メールアドレス'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."password_digest" IS 'パスワードのハッシュ値'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email_verification_status" IS 'メールアドレスの確認状態'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email_verification_token" IS 'メール確認用のトークン'[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108044639"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUniqueIndexToAccountAndCompany (20201108063456)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.1ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_accounts_on_email" ON "accounts"  ("email")[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_employees_on_email" ON "employees"  ("email")[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_companies_on_name" ON "companies"  ("name")[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108063456"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-05-22 08:47:50.490893"], ["updated_at", "2021-05-22 08:47:50.490893"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(3649240473925792830)[0m
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
