@@ -5,5 +5,6 @@ class Ability
 
   def initialize(account)
     account ||= Account.new
+    can :manage, Account, id: account.id
   end
 end
