@@ -1,7 +1,6 @@
-# 「Gulliver Works」
+# 「Rails6 + REST API」
 ## 概要
-GulliverWorks専用のボイラープレート
-Rails6（REST API）+ Docker + PostgreSQL
+Rails6（REST API）+ Docker + PostgreSQL + Auth機能（GulliverWorks用）
     
 ## 開発環境構築
 ### 環境構築する手順
