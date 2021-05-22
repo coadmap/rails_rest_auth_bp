@@ -9,12 +9,12 @@ default: &default
 
 development:
   <<: *default
-  database: gulliver-works_development
+  database: rails_rest_bp_development
 
 test:
   <<: *default
-  database: gulliver-works_test
+  database: rails_rest_bp_test
 
 production:
   <<: *default
-  database: gulliver-works_production
+  database: rails_rest_bp_production

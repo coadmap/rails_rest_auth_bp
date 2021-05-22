@@ -4,12 +4,5 @@ class Company < ApplicationRecord
   has_many :employees, dependent: :destroy
 
   validates :name, uniqueness: true, presence: true
-  validates :name_kana,
-            :head_office_location,
-            :year_of_establishment,
-            :capital,
-            :representative,
-            :representative_kana,
-            :business_summary, presence: true
-  validates :is_listed, inclusion: [true, false]
+  validates :name_kana, presence: true
 end
