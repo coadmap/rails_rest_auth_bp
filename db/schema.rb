@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_08_063456) do
+ActiveRecord::Schema.define(version: 2020_11_05_103105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,30 +26,9 @@ ActiveRecord::Schema.define(version: 2020_11_08_063456) do
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
-  create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "企業", force: :cascade do |t|
-    t.string "name", null: false, comment: "法人名"
-    t.string "name_kana", null: false, comment: "法人名(ふりがな)"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_companies_on_name", unique: true
-  end
-
-  create_table "employees", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "従業員", force: :cascade do |t|
-    t.string "email", null: false, comment: "メールアドレス"
-    t.string "password_digest", null: false, comment: "パスワードのハッシュ値"
-    t.integer "email_verification_status", default: 0, null: false, comment: "メールアドレスの確認状態"
-    t.uuid "email_verification_token", comment: "メール確認用のトークン"
-    t.uuid "company_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["company_id"], name: "index_employees_on_company_id"
-    t.index ["email"], name: "index_employees_on_email", unique: true
-  end
-
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "employees", "companies"
 end
