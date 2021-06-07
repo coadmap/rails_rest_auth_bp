@@ -15,7 +15,7 @@ module JWT
 
       def jwt
         iat = Time.now.to_i
-        exp = iat + 7 * 3600
+        exp = iat + 7 * 24 * 3600 # 期限は1週間
         jti = Jti.create!
 
         payload = {
